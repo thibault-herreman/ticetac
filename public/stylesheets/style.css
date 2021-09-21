@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(0,91,255,1) 100%);
+  min-height: 100vh;
+  position: relative;
+}
+
+.imgLandmark {
+  max-width: 150px;
+}
+
+a {
+  color: #4c4c4c;
+}
+
+.linkHome {
+  padding: 3px 0 3px 30px;
+  background-image: url('/images/train.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 30%;
+}
+
+.paddingFooter {
+  padding-bottom : 50px;
+}
+
+.footerPosition {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+}

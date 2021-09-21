@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <%= title %>
+    </title>
+    <!-- To add in order to scale the view for mobiles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+
+  <body>
+  <%- include('./partials/header'); %>
+    <div class="container-fluid mt-5 paddingFooter">
+      <div class="row justify-content-center">
+        <!-- SIGN IN AREA -->
+        <div class="col-12 col-sm-6 col-lg-4 text-center">
+          <div class="formArea">
+            <h4 class="titleForm">Sign-in :</h4>       
+            <form action="/users/sign-in" method="POST">
+              <div class="form-group">
+                <label for="exampleInputEmail1"></label>
+                <input name="emailFromFront1" type="email" class="form-control" aria-describedby="emailHelp"
+                  placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1"></label>
+                <input name="passwordFromFront1" type="password" class="form-control" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-danger">Confirm</button>
+            </form>
+            <% if (errorConnect != '') { %>
+              <p class="text-danger font-weight-bold font-italic mt-3"><%= errorConnect %></p>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- SIGN UP AREA -->
+        <div class="col-12 col-sm-6 col-lg-4 text-center">
+          <div class="formArea">
+            <h4 class="titleForm">Sign-up :</h4>
+            <form action="/users/sign-up" method="POST">
+              <div class="form-group">
+                <label for="exampleInputUsername2"></label>
+                <input name="nameFromFront2" type="text" class="form-control" placeholder="Name">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputFirstName2"></label>
+                <input name="FirstNameFromFront2" type="text" class="form-control" placeholder="FirstName">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail2"></label>
+                <input name="emailFromFront2" type="email" class="form-control" aria-describedby="emailHelp"
+                  placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword2"></label>
+                <input name="passwordFromFront2" type="password" class="form-control" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-danger">Confirm</button>
+            </form>
+            <% if (errorInsc != '') { %>
+              <p class="text-danger font-weight-bold font-italic mt-3"><%= errorInsc %></p>
+            <% } %>
+          </div>
+        </div>
+
+      </div>
+      <%- include('./partials/footer'); %>
+    </div>
+    
+  </body>
+</html>

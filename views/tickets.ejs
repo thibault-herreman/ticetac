@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %>
+    </title>
+    <!-- To add in order to scale the view for mobiles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <%- include('./partials/header'); %>
+
+    <div class="container-fluid">
+        
+        <% if(resultsSearch.length == 0){%>
+            <div class="row mt-4 justify-content-center">
+                <div class="col-6 flex-column align-items-center d-flex justify-content-center">
+                    <p class="empty text-danger mt-5 font-weight-bold">Oops! No trains available...</p>
+                    <a href="/home" class="btn btn-danger mt-3">Home</a>
+                </div>
+            </div>
+        <% } else { %>
+
+            <div class="row justify-content-center mt-4">
+                <h4 class="col-8 titleForm justify-content-between align-items-center">Tickets available on <%=availableDate %> :</h4>
+                <ul class="list-group col-8 ">  
+
+                    <% for(let i=0; i<resultsSearch.length;i++){%>
+                    
+                        <li class="list-group-item d-flex justify-content-between align-items-center mt-2"> 
+                            <h5><%=resultsSearch[i].departure%> / <%=resultsSearch[i].arrival%></h5>
+                            <span> train departure at: <%=resultsSearch[i].departureTime%> </span>
+                            <div>
+                                <b> <%=resultsSearch[i].price%> €</b> 
+                                <a href="/results/buy?id=<%=i%>" class="btn btn-danger ml-3">OK</a>
+                            </div>
+                        </li>
+                    
+                    <% } %>
+                </ul>
+            </div> 
+        <% } %>
+   
+        <%- include('./partials/footer'); %>
+    </div>
+</body>
+
+</html>

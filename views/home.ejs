@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>
+      <%= title %>
+    </title>
+    <!-- To add in order to scale the view for mobiles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+
+  <body class="home">
+  <%- include('./partials/header'); %>
+    
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-12 offset-lg-3 col-lg-6 mt-5">
+          <h4 class="titleForm">One-way ticket :</h4>
+        </div>
+
+        <!-- FORM SEARCH -->
+        <form class="col-12 offset-lg-3 col-lg-6 form-inline justify-content-around" action="/search" method="POST">
+          <input name="inputFrom" type="text" class="form-control w-25" value='' placeholder="From: Paris, Marseille..." />
+          <input name="inputTo" type="text" class="form-control w-25" value='' placeholder="To: Lille, Nantes..." />
+          <input name="inputDate" type="date" class="form-control w-25" value='2018-11-21' />
+          <button type="submit" class="btn btn-danger">Go</button>
+        </form>
+        
+        <div class="col-12 offset-lg-3 col-lg-6">
+          <% if (errorSearch != '') { %>
+            <p class="text-danger font-weight-bold font-italic mt-3"><%= errorSearch %></p>
+          <% } %>
+        </div>
+
+      </div>
+      <div class="text-center mt-5 mb-5"><img src="/images/landmark.png" alt="landmark" class="imgLandmark" /></div>
+      <%- include('./partials/footer'); %>
+    </div>
+  </body>
+</html>
