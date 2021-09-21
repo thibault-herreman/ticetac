@@ -3,11 +3,6 @@ var router = express.Router();
 
 var userModel = require('../models/users');
 
-const dateFormat = require('../dateformat');
-const timeFormat = require('../timeformat');
-const cookieParser = require('cookie-parser');
-
-
 /* Voyages sélectionnés  */
 router.get('/journeys',  function(req, res, next) {
    
@@ -21,14 +16,14 @@ router.get('/journeys',  function(req, res, next) {
         res.redirect('/home');
     }
 
-    res.render('journey', { title: 'Journeys', tickets : req.session.tickets });
+    res.render('journey', { title: 'Journeys', tickets : req.session.tickets, sessionUser: req.session.user });
 });
 
 /* Voyages sélectionnés  */
 router.get('/delete', async function(req, res, next) {
 
     if (req.session.user == undefined) {
-    res.redirect('/');
+        res.redirect('/');
     }
     var i= req.query.id;
     req.session.tickets.splice(i,1);
@@ -57,9 +52,8 @@ router.get('/delete', async function(req, res, next) {
 
     var newUserJourneySave = await user.save();
 
-    req.session.destroy();
-    res.redirect('/');
-
+    req.session.tickets = [];
+    res.redirect('/home');
 
 });
   
@@ -71,10 +65,9 @@ router.get('/historics', async function(req, res, next) {
         res.redirect('/');
     };
 
-    //var historics = await userjourneyModel.find({userId: req.session.user.id}).sort({date: 1});
     var historics = await userModel.findById(req.session.user.id).populate('journeyId').exec();
 
-    res.render('historics', { title: 'Historics', userFirstName: req.session.user.firstname, userName: req.session.user.name, historics: historics.journeyId });
+    res.render('historics', { title: 'Historics', sessionUser: req.session.user, historics: historics.journeyId });
 
 });
 

@@ -4,20 +4,19 @@ var router = express.Router();
 var journeyModel = require('../models/journeys');
 
 
-/* GET home page. */
+/* GET page connexion/inscription. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Ticketac', errorConnect: req.session.errorConnect, errorInsc: req.session.errorInsc });
+  res.render('index', { title: 'Ticketac', errorConnect: req.session.errorConnect, errorInsc: req.session.errorInsc, sessionUser: req.session.user });
 });
 
 
 /* GET page avec nos trajets recherchés */
 router.get('/home', async function(req, res, next) {
-
   if (req.session.user == undefined) {
     res.redirect('/');
   }
 
-  res.render('home', { title: 'Home TicetTac', errorSearch: req.session.errorSearch });
+  res.render('home', { title: 'Home TicetTac', errorSearch: req.session.errorSearch, sessionUser: req.session.user });
 });
 
 
@@ -45,7 +44,7 @@ router.post('/search', async function(req, res, next) {
 
     if (journeyList != undefined) {
       req.session.resultsSearch = journeyList; 
-      res.render('tickets', { title: 'Tickets TicetTac', resultsSearch: req.session.resultsSearch, availableDate: req.session.availableDate });
+      res.render('tickets', { title: 'Tickets TicetTac', resultsSearch: req.session.resultsSearch, availableDate: req.session.availableDate, sessionUser: req.session.user });
     }
     
   } else {

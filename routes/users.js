@@ -83,7 +83,13 @@ router.post('/sign-up', async function(req,res,next) {
       res.redirect('/');
     }
   } 
-})
+});
+
+// route inscription
+router.get('/logout', async function(req,res,next) {
+  req.session.destroy();
+  res.redirect('/');
+});
 
 
 module.exports = router;
