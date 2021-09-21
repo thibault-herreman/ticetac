@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var userModel = require('../models/users')
+var userModel = require('../models/users');
+var bcryptjs = require("bcryptjs");
 
 // route connexion
 router.post('/sign-in', async function(req,res,next) {
@@ -11,16 +12,14 @@ router.post('/sign-in', async function(req,res,next) {
   req.session.tickets = [];
     
   var searchUser = await userModel.findOne({
-    email: req.body.emailFromFront1,
-    password: req.body.passwordFromFront1
+    email: req.body.emailFromFront1
   });
 
-  //console.log('Serch User : '+ searchUser);
   if (req.body.emailFromFront1 == '' || req.body.passwordFromFront1 == '') {
     req.session.errorConnect = 'Veuillez remplir tous les champs';
     res.redirect('/');
   } else { 
-    if(searchUser!= null){
+    if(searchUser!= null && bcryptjs.compareSync(req.body.passwordFromFront1, searchUser.password)){
       req.session.errorConnect = "";
 
       req.session.user = {
@@ -41,8 +40,6 @@ router.post('/sign-in', async function(req,res,next) {
 // route inscription
 router.post('/sign-up', async function(req,res,next) {
 
-  console.log('emailFromFront2' + req.body.emailFromFront2 );
-
   // on vérifie si ce qu'on renvoie depuis le input emailFromFront2 est vide
   if (req.body.emailFromFront2 == '') {
     req.session.errorInsc = 'Veuillez remplir tous les champs';
@@ -61,12 +58,13 @@ router.post('/sign-up', async function(req,res,next) {
     // si emailFromFront2 n'est pas null on enregistre en base 
     if(searchUser == null){
       req.session.errorInsc = '';
+      let hash = bcryptjs.hashSync(req.body.passwordFromFront2, 10);
 
       var newUser = new userModel({
         name: req.body.nameFromFront2,
         firstname: req.body.FirstNameFromFront2,
         email: req.body.emailFromFront2,
-        password: req.body.passwordFromFront2,
+        password: hash,
         journeyId: []
       });
       var newUserSave = await newUser.save();
@@ -79,8 +77,6 @@ router.post('/sign-up', async function(req,res,next) {
         id: newUserSave._id,
       };
       
-      // console.log(req.session.user)
-    
       res.redirect('/home')
     } else {
       req.session.errorInsc = 'Cet email est déjà enregistré';

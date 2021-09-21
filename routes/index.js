@@ -37,13 +37,10 @@ router.post('/search', async function(req, res, next) {
 
     villeDepart = villeDepart[0].toUpperCase() + villeDepart.toLowerCase().substr(1);
     villeArrivee = villeArrivee[0].toUpperCase() + villeArrivee.toLowerCase().substr(1);
+
     const convertDate = new Date(dateSearch);
-
-    console.log('villeDepart : ', villeDepart, ' villeArrivee : ', villeArrivee, ' date : ', convertDate);
-
     const journeyList = await journeyModel.find({ departure: villeDepart, arrival: villeArrivee, date: convertDate });
     
-    //console.log(journeyList);
     req.session.availableDate = `${convertDate.getDate()}/${convertDate.getMonth()+1}`;
 
     if (journeyList != undefined) {

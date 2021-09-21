@@ -71,12 +71,8 @@ router.get('/historics', async function(req, res, next) {
         res.redirect('/');
     };
 
-   console.log('Recherche de historic pour user Id =' + req.session.user.id);
-
     //var historics = await userjourneyModel.find({userId: req.session.user.id}).sort({date: 1});
     var historics = await userModel.findById(req.session.user.id).populate('journeyId').exec();
-
-    //console.log('historics :',historics );
 
     res.render('historics', { title: 'Historics', userFirstName: req.session.user.firstname, userName: req.session.user.name, historics: historics.journeyId });
 
